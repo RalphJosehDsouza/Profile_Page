@@ -5,6 +5,7 @@ import {
   MapPin, ChevronRight, Cpu, Zap,
   Terminal,
 } from "lucide-react";
+import IntroScene3D from "./IntroScene3D";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -497,163 +498,6 @@ function CategoryIcon({ category }: { category: string }) {
   }
 }
 
-// ─── Intro Scene ─────────────────────────────────────────────────────────────
-
-function IntroScene({ onEnter }: { onEnter: () => void }) {
-  const [showEnter, setShowEnter] = useState(false);
-  const [doorOpen, setDoorOpen] = useState(false);
-
-  useEffect(() => {
-    const t = setTimeout(() => setShowEnter(true), 2200);
-    return () => clearTimeout(t);
-  }, []);
-
-  const handleEnter = () => {
-    setDoorOpen(true);
-    setTimeout(onEnter, 1600);
-  };
-
-  return (
-    <div className="fixed inset-0 overflow-hidden"
-         style={{ background: "linear-gradient(180deg, #060402 0%, #0d0a06 60%, #181208 100%)" }}>
-
-      {/* Wall texture lines */}
-      <div className="absolute inset-0 pointer-events-none" style={{
-        backgroundImage: `
-          linear-gradient(90deg, rgba(212,146,42,0.04) 1px, transparent 1px),
-          linear-gradient(0deg,  rgba(212,146,42,0.03) 1px, transparent 1px)
-        `,
-        backgroundSize: "120px 120px",
-      }} />
-
-      {/* Ceiling / floor horizon */}
-      <div className="absolute left-0 right-0 h-px opacity-20" style={{ top: "28%", background: "linear-gradient(90deg, transparent 5%, rgba(212,146,42,0.5) 30%, rgba(212,146,42,0.5) 70%, transparent 95%)" }} />
-      <div className="absolute left-0 right-0 h-px opacity-25" style={{ bottom: "22%", background: "linear-gradient(90deg, transparent 5%, rgba(212,146,42,0.4) 30%, rgba(212,146,42,0.4) 70%, transparent 95%)" }} />
-
-      {/* Lamp cord */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-0 w-px"
-           style={{ height: "15%", background: "linear-gradient(to bottom, transparent, rgba(212,146,42,0.55))" }} />
-
-      {/* Lamp assembly */}
-      <div className="absolute left-1/2 -translate-x-1/2 lamp-flicker"
-           style={{ top: "15%", transform: "translateX(-50%)" }}>
-        {/* Shade */}
-        <div style={{
-          width: "90px", height: "55px", margin: "0 auto",
-          background: "linear-gradient(160deg, #9a7424, #6a4a10, #3a2808)",
-          clipPath: "polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%)",
-          boxShadow: "0 4px 8px rgba(0,0,0,0.6)",
-        }} />
-        {/* Bulb glow */}
-        <div className="lamp-glow" style={{
-          width: "12px", height: "12px", borderRadius: "50%",
-          background: "#ffe8a0", margin: "-28px auto 0",
-          boxShadow: "0 0 18px 9px rgba(255,220,120,0.9)",
-          position: "relative", zIndex: 2,
-        }} />
-        {/* Light cone */}
-        <div style={{
-          width: "320px", height: "420px",
-          background: "linear-gradient(180deg, rgba(212,146,42,0.28) 0%, rgba(212,146,42,0.08) 50%, transparent 100%)",
-          clipPath: "polygon(32% 0%, 68% 0%, 100% 100%, 0% 100%)",
-          margin: "0 auto",
-          marginLeft: "-115px",
-          marginTop: "-4px",
-          pointerEvents: "none",
-        }} />
-        {/* Floor pool */}
-        <div style={{
-          width: "380px", height: "55px",
-          background: "radial-gradient(ellipse, rgba(212,146,42,0.22) 0%, transparent 70%)",
-          marginLeft: "-145px", marginTop: "280px",
-          position: "absolute",
-          pointerEvents: "none",
-        }} />
-      </div>
-
-      {/* Door frame — left side */}
-      <div className="absolute" style={{
-        left: "14%", bottom: "22%",
-        width: "130px", height: "220px",
-        border: "3px solid rgba(212,146,42,0.22)",
-        borderBottom: "none",
-      }}>
-        {/* Door panel */}
-        <div className={doorOpen ? "door-open" : ""}
-             style={{
-               width: "100%", height: "100%",
-               background: "linear-gradient(140deg, #1a1208, #0f0a05)",
-               border: "1px solid rgba(212,146,42,0.12)",
-               transformOrigin: "left center",
-               position: "relative",
-             }}>
-          {/* Door panels detail */}
-          <div style={{ position: "absolute", inset: "8px", border: "1px solid rgba(212,146,42,0.1)" }} />
-          <div style={{ position: "absolute", inset: "20px 8px", top: "40%", border: "1px solid rgba(212,146,42,0.08)" }} />
-          {/* Knob */}
-          <div style={{
-            position: "absolute", right: "10px", top: "50%",
-            width: "9px", height: "9px", borderRadius: "50%",
-            background: "radial-gradient(circle at 35% 32%, #d4922a, #7a5210)",
-          }} />
-          {/* Light crack if door opening */}
-          {doorOpen && (
-            <div style={{
-              position: "absolute", left: 0, top: 0, bottom: 0, width: "3px",
-              background: "linear-gradient(0deg, rgba(255,220,120,0) 0%, rgba(255,220,120,0.6) 30%, rgba(255,220,120,0.6) 70%, rgba(255,220,120,0) 100%)",
-            }} />
-          )}
-        </div>
-      </div>
-
-      {/* Title */}
-      <div className="absolute left-1/2 -translate-x-1/2 text-center"
-           style={{ top: "50%", transform: "translate(-50%, -20px)", whiteSpace: "nowrap" }}>
-        <div className="font-mono text-xs tracking-widest mb-3 opacity-40"
-             style={{ color: "#d4922a", fontFamily: "'Special Elite', serif", letterSpacing: "0.4em" }}>
-          CASE FILES DIVISION
-        </div>
-        <h1 style={{
-          fontFamily: "'Playfair Display', serif",
-          color: "#d4922a",
-          fontSize: "clamp(2rem, 5vw, 3rem)",
-          letterSpacing: "0.12em",
-          fontWeight: 700,
-          textShadow: "0 0 40px rgba(212,146,42,0.3)",
-        }}>
-          {PERSON.name}
-        </h1>
-        <div className="font-mono mt-2 opacity-50"
-             style={{ color: "#c8b89a", fontSize: "0.8rem", fontFamily: "'Special Elite', serif", letterSpacing: "0.2em" }}>
-          {PERSON.title}
-        </div>
-      </div>
-
-      {/* Enter button */}
-      {showEnter && (
-        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 text-center fade-in-up">
-          <button onClick={handleEnter}
-            className="px-10 py-3 font-mono text-sm tracking-widest transition-all hover:opacity-80 active:scale-95"
-            style={{
-              border: "1px solid rgba(212,146,42,0.5)",
-              color: "#d4922a", background: "transparent",
-              fontFamily: "'Special Elite', serif", letterSpacing: "0.35em",
-            }}>
-            ▶ ENTER
-          </button>
-          <div className="mt-2 font-mono text-xs opacity-25"
-               style={{ color: "#d4922a", fontFamily: "'Special Elite', serif", letterSpacing: "0.2em" }}>
-            AUTHORIZED PERSONNEL ONLY
-          </div>
-        </div>
-      )}
-
-      {/* Vignette */}
-      <div className="absolute inset-0 vignette" />
-      <div className="absolute inset-0 scanlines" />
-    </div>
-  );
-}
 
 // ─── Case File (Main Navigation) ─────────────────────────────────────────────
 
@@ -1893,7 +1737,7 @@ export default function App() {
       <div className="fixed inset-0 z-[100] pointer-events-none transition-opacity duration-[280ms]"
            style={{ background: "#000", opacity: fading ? 1 : 0 }} />
 
-      {view === "intro"         && <IntroScene onEnter={() => navigate("caseFile")} />}
+      {view === "intro"         && <IntroScene3D onEnter={() => navigate("caseFile")} personName={PERSON.name} personTitle={PERSON.title} />}
       {view === "caseFile"      && <CaseFile onNavigate={navigate} />}
       {view === "evidenceBoard" && <EvidenceBoard onBack={() => navigate("caseFile")} onSelectProject={handleProjectSelect} />}
       {view === "projectDetail" && selectedProject && (
