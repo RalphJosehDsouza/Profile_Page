@@ -240,7 +240,7 @@ excellence meets cutting-edge AI.`,
     "Odoo / ERP", "MongoDB / PostgreSQL", "Docker",
     "REST APIs", "Distributed Systems",
   ],
-  tools: ["VS Code", "Git", "Jupyter Notebook", "Figma", "Postman", "Linux"],
+  tools: ["VS Code", "Git", "Jupyter Notebook", "Postman", "Linux"],
 };
 
 const PROJECTS = [
